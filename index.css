@@ -4,23 +4,112 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
+  background: #000;
+  color: #fff;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: moz-none;
   -ms-user-select: none;
   user-select: none;
+  font-family: "Century Gothic", "Helvetica Neue", Arial, sans-serif;
 }
+
 #timer {
   width: 100%;
-  height: 100%;
-  line-height: 100%;
-  background: #000;
-  color: #fff;
-  text-align: center;
-  font-weight: 700;
-  font-family: century gothic;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  padding: 60px 20px 80px;
+  box-sizing: border-box;
 }
+
+.flip-unit {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.flip-separator {
+  font-size: 6vw;
+  min-width: 32px;
+  text-align: center;
+  line-height: 1;
+  color: #f3ba2f;
+  text-shadow: 0 0 18px rgba(243, 186, 47, 0.6);
+}
+
+.flip-card {
+  position: relative;
+  width: clamp(60px, 10vw, 120px);
+  height: clamp(80px, 15vw, 160px);
+  perspective: 600px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+}
+
+.flip-card .top,
+.flip-card .bottom,
+.flip-card .back-top,
+.flip-card .back-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #1c1c1c 0%, #111 100%);
+  color: #e6e6e6;
+  font-size: clamp(48px, 8vw, 120px);
+  font-weight: 700;
+  backface-visibility: hidden;
+}
+
+.flip-card .top {
+  top: 0;
+  border-bottom: 1px solid #000;
+  transform-origin: center bottom;
+}
+
+.flip-card .bottom {
+  bottom: 0;
+  border-top: 1px solid #000;
+  transform-origin: center top;
+  background: linear-gradient(180deg, #0d0d0d 0%, #1b1b1b 100%);
+}
+
+.flip-card .back-top {
+  top: 0;
+  transform-origin: center bottom;
+  transform: rotateX(180deg);
+}
+
+.flip-card .back-bottom {
+  bottom: 0;
+  transform-origin: center top;
+}
+
+.flip-card.flip .top {
+  animation: flipTop 0.25s ease-in forwards;
+}
+
+.flip-card.flip .back-bottom {
+  animation: flipBottom 0.25s ease-out 0.25s forwards;
+}
+
+@keyframes flipTop {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
+}
+
+@keyframes flipBottom {
+  0% { transform: rotateX(180deg); }
+  100% { transform: rotateX(0deg); }
+}
+
 #hide,
 #toggle,
 #reset,
@@ -44,19 +133,15 @@ body {
   height: 44px;
   line-height: 30px;
 }
-#reset {
-  margin-left: 50px;
-}
-#hide {
-  margin-left: -30px;
-  width: 70px;
-}
+
+#reset { margin-left: 50px; }
+#hide { margin-left: -30px; width: 70px; }
+
 #min10,
 #min60,
 #add10,
-#add60 {
-  width: 50px;
-}
+#add60 { width: 50px; }
+
 #def10,
 #def30,
 #def60,
@@ -69,48 +154,28 @@ body {
   top: auto;
   width: 70px;
 }
-#min10 {
-  margin-left: -270px;
-}
-#min60 {
-  margin-left: -330px;
-}
-#add10 {
-  margin-left: 230px;
-}
-#add60 {
-  margin-left: 290px;
-}
-#def10 {
-  margin-left: -285px;
-}
-#def30 {
-  margin-left: -205px;
-}
-#def60 {
-  margin-left: -125px;
-}
-#def180 {
-  margin-left: -45px;
-}
-#def300 {
-  margin-left: 35px;
-}
-#def600 {
-  margin-left: 115px;
-}
-#def900 {
-  margin-left: 195px;
-}
-#def1800 {
-  margin-left: 275px;
-}
+
+#min10 { margin-left: -270px; }
+#min60 { margin-left: -330px; }
+#add10 { margin-left: 230px; }
+#add60 { margin-left: 290px; }
+
+#def10 { margin-left: -285px; }
+#def30 { margin-left: -205px; }
+#def60 { margin-left: -125px; }
+#def180 { margin-left: -45px; }
+#def300 { margin-left: 35px; }
+#def600 { margin-left: 115px; }
+#def900 { margin-left: 195px; }
+#def1800 { margin-left: 275px; }
+
 #audio {
   position: absolute;
   bottom: 30px;
   right: 10px;
   z-index: 10;
 }
+
 #xxx {
   position: absolute;
   top: 10px;
