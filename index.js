@@ -1,7 +1,7 @@
-// Updated countdown logic with flip clock display
+// Countdown logic with a Disney-inspired clock display
 var start, isBlink, isLight, isRun, isShow, isWarned, handler, latency, stopBy, delay,
-  audioRemind, audioEnd, flipCards, lastValues, newAudio, soundToggle, show,
-  adjust, toggle, reset, blink, count, run, renderClock;
+  audioRemind, audioEnd, newAudio, soundToggle, show, adjust, toggle, reset, blink,
+  count, run, renderClock;
 
 start = null;
 isBlink = false;
@@ -15,8 +15,6 @@ stopBy = null;
 delay = 60000;
 audioRemind = null;
 audioEnd = null;
-flipCards = [];
-lastValues = [];
 
 newAudio = function(file) {
   var x$, node;
@@ -56,7 +54,7 @@ adjust = function(it, v) {
   if (delay <= 0) {
     delay = 0;
   }
-  return renderClock(delay, true);
+  return renderClock(delay);
 };
 
 toggle = function() {
@@ -94,14 +92,14 @@ reset = function() {
     clearInterval(handler);
   }
   handler = null;
-  renderClock(delay, false);
-  return $('#timer .top, #timer .bottom, #timer .back-top, #timer .back-bottom').css('color', '#e6e6e6');
+  renderClock(delay);
+  return $('#timer .time-part').css('color', '#fff');
 };
 
 blink = function() {
   isBlink = true;
   isLight = !isLight;
-  return $('#timer .top, #timer .bottom, #timer .back-top, #timer .back-bottom').css('color', isLight ? '#e6e6e6' : '#f00');
+  return $('#timer .time-part').css('color', isLight ? '#fff' : '#ff5c8a');
 };
 
 count = function() {
@@ -126,7 +124,7 @@ count = function() {
       return blink();
     }, 500);
   }
-  return renderClock(diff, true);
+  return renderClock(diff);
 };
 
 run = function() {
@@ -149,48 +147,22 @@ run = function() {
   }
 };
 
-renderClock = function(ms, animate) {
-  var totalSeconds, seconds, minutes, hours, values;
+renderClock = function(ms) {
+  var totalSeconds, seconds, minutes, hours, pad;
   totalSeconds = Math.max(0, Math.floor(ms / 1000));
   seconds = totalSeconds % 60;
   minutes = Math.floor(totalSeconds / 60) % 60;
   hours = Math.floor(totalSeconds / 3600);
-  values = [Math.floor(hours / 10) % 10, hours % 10, Math.floor(minutes / 10), minutes % 10, Math.floor(seconds / 10), seconds % 10];
-  return flipCards.forEach(function(card, idx) {
-    var newVal;
-    newVal = values[idx];
-    if (lastValues[idx] === newVal && animate) {
-      return;
-    }
-    if (!animate) {
-      card.dataset.value = newVal;
-      $(card).find('.top, .bottom, .back-top, .back-bottom').text(newVal);
-      lastValues[idx] = newVal;
-      return;
-    }
-    if (card.dataset.value === String(newVal)) {
-      return;
-    }
-    card.dataset.value = newVal;
-    $(card).find('.back-top, .back-bottom').text(newVal);
-    card.classList.add('flip');
-    setTimeout(function() {
-      return $(card).find('.top').text(newVal);
-    }, 225);
-    setTimeout(function() {
-      $(card).find('.bottom').text(newVal);
-      card.classList.remove('flip');
-      return lastValues[idx] = newVal;
-    }, 450);
-  });
+  pad = function(value) {
+    return String(value).padStart(2, '0');
+  };
+  $('.time-part.hours').text(pad(hours));
+  $('.time-part.minutes').text(pad(minutes));
+  return $('.time-part.seconds').text(pad(seconds));
 };
 
 window.onload = function() {
-  flipCards = Array.from(document.querySelectorAll('.flip-card'));
-  lastValues = flipCards.map(function() {
-    return -1;
-  });
-  renderClock(delay, false);
+  renderClock(delay);
   audioRemind = newAudio('audio/smb_warning.mp3');
   return audioEnd = newAudio('audio/smb_mariodie.mp3');
 };
