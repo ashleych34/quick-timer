@@ -3,69 +3,174 @@ html, body
   padding: 0
   width: 100%
   height: 100%
+  background: linear-gradient(180deg, #0a1436 0%, #1b3c8f 55%, #0f1f52 100%)
+  color: #fff
   -webkit-touch-callout: none
   -webkit-user-select: none
   -khtml-user-select: none
   -moz-user-select: moz-none
   -ms-user-select: none
   user-select: none
+  font-family: "Baloo 2", "Fredoka One", "Avenir", "Segoe UI", sans-serif
+  overflow: hidden
+  position: relative
+
+body::before
+  content: ''
+  position: absolute
+  inset: 0
+  background-image: radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.8), transparent 40%),
+                    radial-gradient(2px 2px at 70% 10%, rgba(255, 238, 170, 0.9), transparent 45%),
+                    radial-gradient(2px 2px at 45% 65%, rgba(173, 213, 255, 0.8), transparent 35%),
+                    radial-gradient(3px 3px at 80% 55%, rgba(255, 255, 255, 0.7), transparent 50%)
+  opacity: 0.65
+  pointer-events: none
+  z-index: 0
 
 #timer
+  position: relative
   width: 100%
-  height: 100%
-  line-height: 100%
-  background: #000
-  color: #fff
-  text-align: center
+  height: 100vh
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+  gap: 12px
+  padding: 60px 20px 80px
+  box-sizing: border-box
+  z-index: 1
+
+.clock-display
+  display: flex
+  flex-direction: row
+  flex-wrap: nowrap
+  align-items: baseline
+  gap: 0.4rem
+  padding: 14px 18px
+
+.clock-title
+  font-size: 18px
   font-weight: 700
-  font-family: century gothic
+  letter-spacing: 0.08em
+  color: #ffe07d
+  text-shadow: 0 0 10px rgba(255, 224, 125, 0.7)
+  display: flex
+  align-items: center
+  gap: 8px
+
+  &::before
+    content: '\2727'
+    color: #9bd4ff
+    text-shadow: 0 0 12px rgba(155, 212, 255, 0.8)
+    animation: shimmer 3s ease-in-out infinite alternate
+
+  &::after
+    content: '\2726'
+    color: #ffcf7d
+    text-shadow: 0 0 12px rgba(255, 207, 125, 0.8)
+    animation: shimmer 2.4s ease-in-out infinite alternate
+
+.time-part
+  font-size: clamp(64px, 12vw, 140px)
+  font-weight: 800
+  letter-spacing: 0.08em
+  color: #fff
+  text-shadow: 0 0 22px rgba(255, 255, 255, 0.65), 0 0 38px rgba(94, 179, 255, 0.75)
+
+.time-separator
+  font-size: clamp(54px, 10vw, 120px)
+  color: #ffcf7d
+  text-shadow: 0 0 14px rgba(255, 207, 125, 0.8)
+
+@keyframes shimmer
+  0%
+    opacity: 0.8
+    transform: translateY(-1px) scale(1)
+  100%
+    opacity: 1
+    transform: translateY(1px) scale(1.05)
 
 #hide, #toggle, #reset, #min10, #min60, #add10, #add60, #def10, #def30, #def60, #def180, #def300, #def600, #def900, #def1800
   position: absolute
-  top: 5px
+  top: 8px
   left: 50%
-  margin-left: -210px
-  width: 170px
-  height: 44px
-  line-height: 30px
+  margin-left: -220px
+  width: 180px
+  height: 48px
+  line-height: 32px
+  border-radius: 999px
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28)
+  z-index: 2
+
 #reset
-  margin-left: 50px
+  margin-left: 60px
 #hide
   margin-left: -30px
-  width: 70px
+  width: 76px
 
 #min10, #min60, #add10, #add60
-  width: 50px
+  width: 56px
 
 #def10, #def30, #def60, #def180, #def300, #def600, #def900, #def1800
-  bottom: 5px
+  bottom: 10px
   top: auto
-  width: 70px
+  width: 74px
+
 #min10
-  margin-left: -270px
+  margin-left: -285px
 #min60
-  margin-left: -330px
+  margin-left: -350px
 #add10
-  margin-left: 230px
+  margin-left: 250px
 #add60
-  margin-left: 290px
+  margin-left: 314px
 
 #def10
-  margin-left: -285px
+  margin-left: -290px
 #def30
-  margin-left: -205px
+  margin-left: -210px
 #def60
-  margin-left: -125px
+  margin-left: -130px
 #def180
-  margin-left: -45px
+  margin-left: -50px
 #def300
-  margin-left: 35px
+  margin-left: 30px
 #def600
-  margin-left: 115px
+  margin-left: 110px
 #def900
-  margin-left: 195px
+  margin-left: 190px
 #def1800
-  margin-left: 275px
+  margin-left: 270px
+
+.btn
+  border: none
+  font-weight: 700
+  letter-spacing: 0.01em
+  transition: transform 0.15s ease, box-shadow 0.2s ease
+
+  &:active
+    transform: translateY(2px)
+
+.btn-primary
+  background: linear-gradient(135deg, #1a75ff 0%, #67c7ff 100%)
+  color: #0a1a3f
+
+.btn-warning
+  background: linear-gradient(135deg, #ffcc63 0%, #ff9f58 100%)
+  color: #2d1200
+
+.btn-info
+  background: linear-gradient(135deg, #54d1ff 0%, #7bf3ff 100%)
+  color: #0a1a3f
+
+.btn-success
+  background: linear-gradient(135deg, #5cdf8b 0%, #3ec6a1 100%)
+  color: #072319
+
+.btn-default
+  background: rgba(255, 255, 255, 0.35)
+  color: #0a1436
+  border: 1px solid rgba(255, 255, 255, 0.4)
 
 #audio
   position: absolute
