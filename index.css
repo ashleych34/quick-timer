@@ -43,6 +43,8 @@ body::before {
 
 .clock-display {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: baseline;
   gap: 0.4rem;
   padding: 14px 18px;
@@ -122,6 +124,7 @@ body::before {
   line-height: 32px;
   border-radius: 999px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.28);
+  z-index: 2;
 }
 
 #reset {
