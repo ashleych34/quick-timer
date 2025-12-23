@@ -59,7 +59,7 @@ adjust = function(it, v) {
 
 toggle = function() {
   isRun = !isRun;
-  $('#toggle').text(isRun ? "STOP" : "RUN");
+  $('#toggle').text(isRun ? "停止 / STOP" : "開始 / RUN");
   if (!isRun && handler) {
     stopBy = new Date();
     clearInterval(handler);
